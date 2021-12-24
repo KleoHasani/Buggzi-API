@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "Bug tracking for small teams and individual developers. Stay on track with Buggzi.",
   "engines": {
-    "node": "17.x"
+    "node": "17.x",
+    "npm": "8.x"
   },
   "main": "src/main.ts",
   "directories": {
@@ -15,7 +16,8 @@
     "build": "tsc --build",
     "clean": "rimraf ./build",
     "start:dev": "nodemon",
-    "start": "npm run build && node build/main.js"
+    "start": "node build/main.js",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
