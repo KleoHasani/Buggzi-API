@@ -2,8 +2,8 @@
   "compilerOptions": {
     "incremental": true /* Enable incremental compilation */,
     "lib": ["es2021"],
-    "target": "ES2021" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
-    "module": "es6" /* Specify what module code is generated. */,
+    "target": "es5" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "module": "commonjs" /* Specify what module code is generated. */,
     "outDir": "build" /* Specify an output folder for all emitted files. */,
     "removeComments": true /* Disable emitting comments. */,
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,

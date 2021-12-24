@@ -2,6 +2,9 @@
   "name": "buggzi",
   "version": "0.0.1",
   "description": "Bug tracking for small teams and individual developers. Stay on track with Buggzi.",
+  "engines": {
+    "node": "17.x"
+  },
   "main": "src/main.ts",
   "directories": {
     "doc": "docs"
@@ -11,7 +14,8 @@
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "build": "tsc --build",
     "clean": "rimraf ./build",
-    "start:dev": "nodemon"
+    "start:dev": "nodemon",
+    "start": "npm run build && node build/main.js"
   },
   "repository": {
     "type": "git",
