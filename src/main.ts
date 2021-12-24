@@ -10,4 +10,4 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-app.listen(8000, () => console.log("Live on port: 8000"));
+app.listen(8000);
