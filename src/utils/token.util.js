@@ -1,26 +1,57 @@
-const { sign, verify } = require("jsonwebtoken");
+const { sign, verify, decode } = require("jsonwebtoken");
 
 const ACCESS = "30m";
 const REFRESH = "1y";
 
 /**
- * Genearte toke with userID and sessionID.
- * @param {string} payload.userID
+ * Genearte access token with user and sessionID.
+ * @param {string} payload.user
  * @param {string} payload.sessionID
- * @param {string} ttl
  * @returns {string}
  */
-function createToken({ userID, sessionID }, ttl = ACCESS) {
-  return sign({ userID, sessionID }, process.env.TOKEN_SIGN_KEY, { expiresIn: ttl });
+function createAccessToken(userID, sessionID) {
+  return `Bearer ${sign({ userID, sessionID }, process.env.TOKEN_SIGN_KEY, { expiresIn: ACCESS })}`;
+}
+
+/**
+ * Genearte refresh token with and sessionID.
+ * @param {string} sessionID
+ * @returns {string}
+ */
+function createRefreshToken(sessionID) {
+  return sign({ sessionID }, process.env.TOKEN_SIGN_KEY, { expiresIn: REFRESH });
 }
 
 /**
  * Verify token.
  * @param {string} token
- * @returns {JWTPayload}
+ * @returns {boolean, boolean, JWTPayload | null}
  */
 function verifyToken(token) {
-  return verify(token, process.env.TOKEN_SIGN_KEY);
+  try {
+    const data = verify(token, process.env.TOKEN_SIGN_KEY);
+    return {
+      valid: true,
+      expired: false,
+      data,
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      valid: false,
+      expired: err.message === "jwt expired",
+      data: null,
+    };
+  }
 }
 
-module.exports = { ACCESS, REFRESH, createToken, verifyToken };
+/**
+ * Deserialize a token without checking its validity.
+ * @param {string} token
+ * @returns {JWTPayload}
+ */
+function deserializeToken(token) {
+  return decode(token);
+}
+
+module.exports = { createAccessToken, createRefreshToken, verifyToken, deserializeToken };

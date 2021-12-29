@@ -4,7 +4,7 @@ const { UserModel } = require("../models/user.model");
  * Create a new user in the database.
  * @param {string} username
  * @param {string} password
- * @returns {void}
+ * @returns {Promise<void>}
  */
 async function createUserService(username, password) {
   try {

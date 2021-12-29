@@ -1,6 +1,6 @@
 const { createUserService, validateUserService } = require("../services/user.service");
 const { createSessionService } = require("../services/session.service");
-const { ACCESS, REFRESH, createToken } = require("../utils/token.util");
+const { createAccessToken, createRefreshToken } = require("../utils/token.util");
 
 /**
  * Register user.
@@ -42,11 +42,11 @@ async function createSessionController(req, res) {
     const session = await createSessionService(user.id, req.get("user-agent"));
 
     // Create tokens.
-    const accessToken = createToken({ userID: user.id, sessionID: session.id }, ACCESS);
-    const refreshTtoken = createToken({ userID: user.id, sessionID: session.id }, REFRESH);
+    const accessToken = createAccessToken(user.id, session.id);
+    const refreshTtoken = createRefreshToken(session.id);
 
     // Send tokens with header.
-    res.setHeader("authorization", `Bearer ${accessToken}`);
+    res.setHeader("authorization", accessToken);
     res.setHeader("x-refresh", refreshTtoken);
 
     // Create response.
@@ -59,19 +59,5 @@ async function createSessionController(req, res) {
   // Send response.
   res.status(apiResponse.status).json(apiResponse);
 }
-
-// /**
-//  * Get user/Get session.
-//  * @param {Request} req
-//  * @param {Response} res
-//  */
-// async function getSessionController(req, res) {}
-
-// /**
-//  * Logout user/Delete session.
-//  * @param {Request} req
-//  * @param {Response} res
-//  */
-// async function deleteSessionController(req, res) {}
 
 module.exports = { registerUserController, createSessionController };
