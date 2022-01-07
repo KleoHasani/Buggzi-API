@@ -34,4 +34,18 @@ async function validateUserService(username, password) {
   return user;
 }
 
-module.exports = { createUserService, validateUserService };
+/**
+ * Delete sessions and user.
+ * @param {string} userID
+ */
+async function deleteUserService(userID) {
+  try {
+    // Delete user
+    await UserModel.findByIdAndDelete(userID);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+module.exports = { createUserService, validateUserService, deleteUserService };

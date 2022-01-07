@@ -6,7 +6,9 @@ const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 
-const UserRouter = require("./routers/user.router");
+const UsersRouter = require("./routers/users.router");
+const SessionsRouter = require("./routers/sessions.router");
+const ProjectsRouter = require("./routers/projects.router");
 
 // Global VARS.
 const PORT = parseInt(process.env.PORT, 10) || 8000;
@@ -22,13 +24,13 @@ app.use(
   cors({
     origin: process.env.DOMAIN,
     methods: "GET,PATCH,POST,DELETE",
-    allowedHeaders: ["content-type", "authorization", "x-refresh"],
-    exposedHeaders: ["authorization", "x-refresh"],
+    allowedHeaders: ["content-type", "authorization", "x-refresh", "x-access-token"],
+    exposedHeaders: ["authorization", "x-refresh", "x-access-token"],
   })
 );
 
 // App routing.
-app.use("/api/", UserRouter);
+app.use("/api/", [UsersRouter, SessionsRouter, ProjectsRouter]);
 
 // Listen
 app.listen(PORT);

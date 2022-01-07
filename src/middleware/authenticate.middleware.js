@@ -34,11 +34,10 @@ async function authenticate(req, res, next) {
       if (!ref.valid) throw new Error("Invalid refresh token.", { cause: 401 });
 
       // Find session from refresh token.
-      console.log(ref.data);
       const session = await SessionModel.findById(ref.data.sessionID);
 
       // Check session is valid.
-      if (!session || !session.valid) throw new Error("Invalid session.", { cause: 401 });
+      if (!session) throw new Error("Invalid session.", { cause: 401 });
 
       // Get user data from access to ensure access token user and refresh token user match.
       const deserializeAccessToken = deserializeToken(authorizationToken);
