@@ -1,5 +1,9 @@
 const { Router } = require("express");
-const { registerUserController, deleteUserController } = require("../controllers/users.controller");
+const {
+  registerUserController,
+  deleteUserController,
+  updateUserController,
+} = require("../controllers/users.controller");
 const { validateRegister, results } = require("../middleware/validator.middleware");
 const { authenticate } = require("../middleware/authenticate.middleware");
 
@@ -10,6 +14,12 @@ const router = Router();
  * POST /api/users
  */
 router.post("/users", [validateRegister, results], registerUserController);
+
+/**
+ * Update user.
+ * PATCG /api/users
+ */
+router.patch("/users", authenticate, updateUserController);
 
 /**
  * Delete user.

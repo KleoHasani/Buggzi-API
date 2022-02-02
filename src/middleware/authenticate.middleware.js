@@ -53,6 +53,7 @@ async function authenticate(req, res, next) {
       // Resign new access token.
       const reAuthorizationToken = createAccessToken(user.id, session.id);
 
+      // Set x-access-token
       res.setHeader("x-access-token", reAuthorizationToken);
       req.user = verifyToken(reAuthorizationToken).data;
     }

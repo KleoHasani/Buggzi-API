@@ -38,6 +38,22 @@ async function validateUserService(username, password) {
  * Delete sessions and user.
  * @param {string} userID
  */
+async function updateUserService(userID, newPassword) {
+  try {
+    console.log(userID);
+    console.log(newPassword);
+    // Delete user
+    await UserModel.updateOne({ _id: userID }, { $set: { password: newPassword } });
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+/**
+ * Delete sessions and user.
+ * @param {string} userID
+ */
 async function deleteUserService(userID) {
   try {
     // Delete user
@@ -48,4 +64,4 @@ async function deleteUserService(userID) {
   }
 }
 
-module.exports = { createUserService, validateUserService, deleteUserService };
+module.exports = { createUserService, validateUserService, updateUserService, deleteUserService };

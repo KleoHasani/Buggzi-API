@@ -26,11 +26,12 @@ async function saveHashedPassword(next) {
     this.password = await hash(this.password, 10);
     next();
   } catch (err) {
-    throw new Error("Internal error. Unable to create a new user.", { cause: 400 });
+    console.log(err);
+
+    throw new Error("Internal error. Unable to save.", { cause: 400 });
   }
 }
 
-UserSchema.pre("save", saveHashedPassword);
 UserSchema.methods.validatePassword = async function validatePassword(password) {
   try {
     return await compare(password, this.password);
@@ -38,6 +39,9 @@ UserSchema.methods.validatePassword = async function validatePassword(password) 
     throw new Error("Internal error. Unable to validate user.");
   }
 };
+
+UserSchema.pre("save", saveHashedPassword);
+UserSchema.pre("updateOne", saveHashedPassword);
 
 const UserModel = model("User", UserSchema, "tblUsers");
 

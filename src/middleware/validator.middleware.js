@@ -1,5 +1,6 @@
 const { body, validationResult } = require("express-validator");
 
+// Validate register body.
 const validateRegister = [
   body("username").notEmpty().withMessage("Username can not be empty").trim(),
   body("password")
@@ -10,6 +11,7 @@ const validateRegister = [
     .withMessage("Password must contain at least 8 or more characters"),
 ];
 
+// Validate login body.
 const validateLogin = [
   body("username").notEmpty().withMessage("Username can not be empty").trim(),
   body("password").notEmpty().withMessage("Password can not be empty").trim(),

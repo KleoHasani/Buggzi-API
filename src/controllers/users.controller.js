@@ -1,5 +1,5 @@
 const { deleteSessionsService } = require("../services/sessions.service");
-const { createUserService, deleteUserService } = require("../services/users.service");
+const { createUserService, deleteUserService, updateUserService } = require("../services/users.service");
 
 /**
  * Register user.
@@ -39,9 +39,7 @@ async function deleteUserController(req, res) {
     // Delete user by userID.
     await deleteUserService(req.user.userID);
 
-    // Redirect/handle response.
-
-    // Create user created response.
+    // Create user deleted response.
     apiResponse = console.response(200, "User deleted");
   } catch (err) {
     // Create conflict response.
@@ -52,4 +50,26 @@ async function deleteUserController(req, res) {
   res.status(apiResponse.status).json(apiResponse);
 }
 
-module.exports = { registerUserController, deleteUserController };
+/**
+ * Delete user.
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function updateUserController(req, res) {
+  const { password } = req.body;
+  let apiResponse = null;
+
+  try {
+    await updateUserService(req.user.userID, password);
+    // Create user updated response.
+    apiResponse = console.response(200, "User updated");
+  } catch (err) {
+    // Create conflict response.
+    apiResponse = console.response(409, err.message);
+  }
+
+  // Send response.
+  res.status(apiResponse.status).json(apiResponse);
+}
+
+module.exports = { registerUserController, deleteUserController, updateUserController };
