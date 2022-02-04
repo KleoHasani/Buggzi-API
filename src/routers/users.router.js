@@ -10,14 +10,14 @@ const { authenticate } = require("../middleware/authenticate.middleware");
 const router = Router();
 
 /**
- * Register user.
+ * Register user (Create new user).
  * POST /api/users
  */
 router.post("/users", [validateRegister, results], registerUserController);
 
 /**
- * Update user.
- * PATCG /api/users
+ * Update user (password).
+ * PATCH /api/users
  */
 router.patch("/users", authenticate, updateUserController);
 

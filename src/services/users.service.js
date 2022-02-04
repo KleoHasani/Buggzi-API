@@ -40,8 +40,6 @@ async function validateUserService(username, password) {
  */
 async function updateUserService(userID, newPassword) {
   try {
-    console.log(userID);
-    console.log(newPassword);
     // Delete user
     await UserModel.updateOne({ _id: userID }, { $set: { password: newPassword } });
   } catch (err) {

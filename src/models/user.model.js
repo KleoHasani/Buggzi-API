@@ -17,21 +17,7 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-/**
- * Save password hashed to database on new user create.
- * @param {PreSaveMiddlewareFunction} next
- */
-async function saveHashedPassword(next) {
-  try {
-    this.password = await hash(this.password, 10);
-    next();
-  } catch (err) {
-    console.log(err);
-
-    throw new Error("Internal error. Unable to save.", { cause: 400 });
-  }
-}
-
+// Validate given password agains hashed password.
 UserSchema.methods.validatePassword = async function validatePassword(password) {
   try {
     return await compare(password, this.password);
@@ -40,8 +26,28 @@ UserSchema.methods.validatePassword = async function validatePassword(password) 
   }
 };
 
-UserSchema.pre("save", saveHashedPassword);
-UserSchema.pre("updateOne", saveHashedPassword);
+// Hash password on save. (Create new user.)
+UserSchema.pre("save", async function () {
+  try {
+    this.password = await hash(this.password, 10);
+    next();
+  } catch (err) {
+    console.log(err);
+    throw new Error("Internal error. Unable to save.", { cause: 400 });
+  }
+});
+
+// Hash password on update.
+UserSchema.pre("updateOne", { document: true, query: true }, async function (next) {
+  try {
+    const update = this.getUpdate().$set;
+    update.password = await hash(update.password, 10);
+    next();
+  } catch (err) {
+    console.log(err);
+    throw new Error("Internal error. Unable to save.", { cause: 400 });
+  }
+});
 
 const UserModel = model("User", UserSchema, "tblUsers");
 
