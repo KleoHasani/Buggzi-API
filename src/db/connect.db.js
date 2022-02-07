@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+// TODO: Switch from MongoDB to RelationalDB.
 
 /**
  * Create MongoDB connection.

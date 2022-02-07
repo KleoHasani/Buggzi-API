@@ -1,3 +1,4 @@
+const { set } = require("mongoose");
 const { ProjectModel } = require("../models/project.model");
 
 /**
@@ -9,7 +10,7 @@ const { ProjectModel } = require("../models/project.model");
  */
 async function createProjectService(userID, name, description) {
   try {
-    return await ProjectModel.create({
+    await ProjectModel.create({
       userID,
       name,
       description,
@@ -22,13 +23,34 @@ async function createProjectService(userID, name, description) {
 /**
  * Delete project by projectID.
  * @param {string} projectID
+ * @param {string} userID
  */
-async function deleteProjectService(projectID) {
+async function deleteProjectService(projectID, userID) {
   try {
-    await ProjectModel.findByIdAndDelete(projectID);
+    await ProjectModel.findOneAndDelete({ _id: projectID, userID: userID });
   } catch {
     throw new Error("Unable to delete project.");
   }
 }
 
-module.exports = { createProjectService, deleteProjectService };
+/**
+ * Update project by projectID.
+ * @param {object} q
+ * @param {object} d
+ * @param {string} q.projectID
+ * @param {string} q.userID
+ * @param {string} d.name
+ * @param {string} d.description
+ */
+async function updateProjectService(q, d) {
+  try {
+    await ProjectModel.findOneAndUpdate(
+      { _id: q.projectID, userID: d.userID },
+      { $set: { name: d.name, description: d.description } }
+    );
+  } catch {
+    throw new Error("Unable to update project.");
+  }
+}
+
+module.exports = { createProjectService, deleteProjectService, updateProjectService };

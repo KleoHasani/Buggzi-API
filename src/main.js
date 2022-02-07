@@ -34,3 +34,5 @@ app.use("/api/", [UsersRouter, SessionsRouter, ProjectsRouter]);
 
 // Listen
 app.listen(PORT);
+
+// FIXME: Fix all authorization headers to Auth or Authorization
