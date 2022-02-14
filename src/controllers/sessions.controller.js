@@ -36,6 +36,7 @@ async function createSessionController(req, res) {
   res.status(apiResponse.status).json(apiResponse);
 }
 
+// TODO: DELTE THIS.
 // /**
 //  * Get user/GET session.
 //  * @param {Request} req

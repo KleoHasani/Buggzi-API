@@ -58,6 +58,7 @@ async function authenticate(req, res, next) {
       req.user = verifyToken(reAuthorizationToken).data;
     }
 
+    // Continue.
     next();
   } catch (err) {
     console.error(err);

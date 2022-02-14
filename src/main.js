@@ -9,6 +9,7 @@ const cors = require("cors");
 const UsersRouter = require("./routers/users.router");
 const SessionsRouter = require("./routers/sessions.router");
 const ProjectsRouter = require("./routers/projects.router");
+const TicketsRouter = require("./routers/tickets.router");
 
 // Global VARS.
 const PORT = parseInt(process.env.PORT, 10) || 8000;
@@ -29,10 +30,9 @@ app.use(
   })
 );
 
+// TODO: Global authentication middleware impl.
 // App routing.
-app.use("/api/", [UsersRouter, SessionsRouter, ProjectsRouter]);
+app.use("/api/", [UsersRouter, SessionsRouter, ProjectsRouter, TicketsRouter]);
 
 // Listen
 app.listen(PORT);
-
-// FIXME: Fix all authorization headers to Auth or Authorization

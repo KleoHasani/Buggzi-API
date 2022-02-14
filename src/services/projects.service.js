@@ -1,4 +1,3 @@
-const { set } = require("mongoose");
 const { ProjectModel } = require("../models/project.model");
 
 /**
@@ -6,7 +5,7 @@ const { ProjectModel } = require("../models/project.model");
  * @param {string} userID
  * @param {string} name
  * @param {string} description
- * @returns {object}
+ * @returns {void}
  */
 async function createProjectService(userID, name, description) {
   try {
@@ -41,11 +40,12 @@ async function deleteProjectService(projectID, userID) {
  * @param {string} q.userID
  * @param {string} d.name
  * @param {string} d.description
+ * @returns {void}
  */
 async function updateProjectService(q, d) {
   try {
-    await ProjectModel.findOneAndUpdate(
-      { _id: q.projectID, userID: d.userID },
+    await ProjectModel.updateOne(
+      { _id: q.projectID, userID: q.userID },
       { $set: { name: d.name, description: d.description } }
     );
   } catch {

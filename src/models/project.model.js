@@ -11,13 +11,14 @@ const ProjectSchema = new Schema(
   { timestamps: true }
 );
 
-ProjectSchema.virtual("hasTeamMembers").get(function getHasTeamMembers() {
-  return this.team.length > 0;
-});
+// TODO: DELETE THIS, if it remains un-used.
+// ProjectSchema.virtual("hasTeamMembers").get(function getHasTeamMembers() {
+//   return this.team.length > 0;
+// });
 
-ProjectSchema.virtual("hasTickets").get(function getHasTickets() {
-  return this.tickets.length > 0;
-});
+// ProjectSchema.virtual("hasTickets").get(function getHasTickets() {
+//   return this.tickets.length > 0;
+// });
 
 const ProjectModel = model("Project", ProjectSchema, "tblProjects");
 

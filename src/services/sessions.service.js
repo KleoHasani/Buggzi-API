@@ -14,6 +14,7 @@ async function createSessionService(userID, agent) {
   }
 }
 
+// TODO: DELETE THIS code.
 // /**
 //  * Get current session by sessionID.
 //  * @param {string} sessionID

@@ -1,4 +1,4 @@
-#!/bin/sh
+3#!/bin/sh
 
 set -e
 
@@ -24,7 +24,7 @@ if [[ "$exec_continue" =~ ^([yY])$ ]]; then
   # Create .env file.
   echo "PORT=3000
 DOMAIN=localhost
-DB_URI=mongodb://localhost:27017/BuggziAPI
+DB_URI=mongodb://localhost:37017/BuggziAPI
 TOKEN_SIGN_KEY=$(openssl rand -hex 32)" >> .env
 else
   exit

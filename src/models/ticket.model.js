@@ -9,18 +9,19 @@ const TicketStatus = {
 const TicketSchema = new Schema(
   {
     projectID: { type: Schema.Types.ObjectId, ref: "Project", required: true },
-    assignID: { type: [Schema.Types.ObjectId], ref: "User", required: false, default: [] },
+    userID: { type: Schema.Types.ObjectId, ref: "User", required: true },
     name: { type: String, required: true },
     description: { type: String, required: false, default: "" },
-    status: { type: TicketStatus, required: true, default: TicketStatus.ticket },
+    status: { type: Number, required: true, default: TicketStatus.ticket },
+    assignID: { type: [Schema.Types.ObjectId], ref: "User", required: false, default: [] },
   },
   { timestamps: true }
 );
 
-TicketSchema.virtual("isAssigned").get(function getIsAssigned() {
+TicketSchema.virtual("isAssigned").get(function () {
   return this.assignID.length > 0;
 });
 
 const TicketModel = model("Ticket", TicketSchema, "tblTickets");
 
-module.exports = { TicketModel };
+module.exports = { TicketModel, TicketStatus };
