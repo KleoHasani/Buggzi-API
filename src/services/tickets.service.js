@@ -76,10 +76,29 @@ async function deleteTicketService(ticketID) {
     throw new Error("Unable to delete ticket.");
   }
 }
+
+/**
+ *
+ * @param {string} ticketID
+ * @param {object} data
+ * @param {string} data.name
+ * @param {string} data.description
+ * @param {string} data.status
+ * @param {[string]} data.assigned
+ */
+async function updateTicketService(ticketID, data) {
+  try {
+    await TicketModel.findByIdAndUpdate(ticketID, {
+      $set: { name: data.name, description: data.description, status: data.status, assigned: data.assigned },
+    });
+  } catch {}
+}
+
 module.exports = {
   getAllTicketService,
   getTicketService,
   createTicketService,
   deleteAllTicketService,
   deleteTicketService,
+  updateTicketService,
 };

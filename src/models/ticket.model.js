@@ -13,14 +13,15 @@ const TicketSchema = new Schema(
     name: { type: String, required: true },
     description: { type: String, required: false, default: "" },
     status: { type: Number, required: true, default: TicketStatus.ticket },
-    assignID: { type: [Schema.Types.ObjectId], ref: "User", required: false, default: [] },
+    assigned: { type: [Schema.Types.ObjectId], ref: "User", required: false, default: [] },
   },
   { timestamps: true }
 );
 
-TicketSchema.virtual("isAssigned").get(function () {
-  return this.assignID.length > 0;
-});
+// TODO: DELETE THIS if not used.
+// TicketSchema.virtual("isAssigned").get(function () {
+//   return this.assignID.length > 0;
+// });
 
 const TicketModel = model("Ticket", TicketSchema, "tblTickets");
 

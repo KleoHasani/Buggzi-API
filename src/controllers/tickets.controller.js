@@ -4,6 +4,7 @@ const {
   getAllTicketService,
   deleteAllTicketService,
   deleteTicketService,
+  updateTicketService,
 } = require("../services/tickets.service");
 
 /**
@@ -116,10 +117,33 @@ async function deleteTicketController(req, res) {
   res.status(apiResponse.status).json(apiResponse);
 }
 
+/**
+ * Update ticket by (ticketID).
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function updateTicketController(req, res) {
+  const { ticketID, name, description, status, assigned } = req.body;
+  let apiResponse = null;
+  try {
+    // Delete all tickets.
+    await updateTicketService(ticketID, { name, description, status, assigned });
+    // Create response.
+    apiResponse = console.response(200, "Ticket updated");
+  } catch (err) {
+    // Create conflic response.
+    apiResponse = console.response(409, err.message);
+  }
+
+  // Send response.
+  res.status(apiResponse.status).json(apiResponse);
+}
+
 module.exports = {
   getAllTicketController,
   getTicketController,
   createTicketController,
   deleteAllTicketController,
   deleteTicketController,
+  updateTicketController,
 };

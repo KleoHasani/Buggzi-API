@@ -7,6 +7,7 @@ const {
   createTicketController,
   deleteAllTicketController,
   deleteTicketController,
+  updateTicketController,
 } = require("../controllers/tickets.controller");
 
 const router = Router();
@@ -41,11 +42,10 @@ router.delete("/tickets", authenticate, deleteAllTicketController);
  */
 router.delete("/ticket", authenticate, deleteTicketController);
 
-// TODO: Implement the rest of the endpoints.
-// /**
-//  * Update ticket.
-//  * PATCH /api/tickets
-//  */
-// router.patch("/tickets", authenticate, updateTicketController);
+/**
+ * Update ticket.
+ * PATCH /api/tickets
+ */
+router.patch("/tickets", authenticate, updateTicketController);
 
 module.exports = router;
