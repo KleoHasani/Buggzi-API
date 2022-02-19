@@ -3,6 +3,6 @@ module.exports = {
   coverageDirectory: "coverage",
   coverageProvider: "v8",
   testEnvironment: "node",
-  testMatch: ["**/tests/**/*.test.[jt]s?(x)"],
+  testMatch: ["**/tests/**/*.test.js"],
   testPathIgnorePatterns: ["/node_modules/"],
 };

@@ -1,15 +1,13 @@
 {
   "env": {
+    "commonjs": true,
     "es2021": true,
-    "browser": true,
     "node": true
   },
-  "extends": ["airbnb-base", "prettier"],
-  "parser": "@typescript-eslint/parser",
+  "extends": ["airbnb-base", "prettier", "jest"],
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "ecmaVersion": 12
   },
-  "plugins": ["@typescript-eslint"],
   "rules": {
     "no-console": "off"
   }
